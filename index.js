@@ -74,10 +74,20 @@ function Airplane(name) {
           + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
   */
   
- function Car() {
-    
+ function Car(model, milesPerGallon) {
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
   }
-  
+  Car.prototype.fill = function(gallons) {
+    this.tank += gallons;
+  }
+  Car.prototype.drive = function(distance) {
+    this.odometer += distance;
+    this.tank -= distance / this.milesPerGallon;
+  }
+
   
   /*
     TASK 3
@@ -86,18 +96,22 @@ function Airplane(name) {
       - Besides the methods on Person.prototype, babies have the ability to `.play()`:
           + Should return a string "Playing with x", x being the favorite toy.
   */
- function Baby() {
-   
+  function Baby(name, age, favoriteToy) {
+    Person.call(this, name, age);
+    this.favoriteToy = favoriteToy;
   }
- 
+  Baby.prototype = Object.create(Person.prototype);
+  Baby.prototype.play = function() {
+    return `Playing with ${this.favoriteToy}`;
+  }
   
   /* 
     TASK 4
     In your own words explain the four principles for the "this" keyword below:
-    1. 
-    2. 
-    3. 
-    4. 
+    1. Global binding - when "this" is used in the global context it is bound to the window object or the global object, undefined in strict mode.
+    2. Implicit binding - when a function is called to the right of a dot, "this" is bound to the object to the left of the dot.
+    3. New binding - when a constructor function is used, "this" is bound to the object created by the new keyword.
+    4. Explicit binding - when using a method like call() or apply(), "this" is explicitly bound to whatever we tell it to be bound to.
   */
   
   
